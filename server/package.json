@@ -1,0 +1,14 @@
+{
+  "name": "twitter-feed-server",
+  "version": "1.0.0",
+  "description": "Twitter feed server",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Ben Sparks",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
