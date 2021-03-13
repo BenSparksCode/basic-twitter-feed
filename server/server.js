@@ -1,35 +1,40 @@
 const express = require('express')
-const fs = require('fs')
+const fs = require('fs').promises;
 var path = require('path');
-
-// const userFile = require('../data/user.txt')
-const tweetFile = ''
 
 const app = express()
 const port = 5000
 
+let dataLoaded = false
+let users = []
+let tweets = []
+
+const getStringArrayFromFile = async (fileName) => {
+    // Will look for file in '../data' dir
+    const res = await fs.readFile(path.join(__dirname, '../data') + `/${fileName}`, 'utf8')
+    return res.split('\r\n')
+}
+
+const getTweetsFromFile = async () => {
+    const lines = await getStringArrayFromFile('tweet.txt')
+    tweets = lines
+}
+
+const getUsersFromFile = async () => {
+
+    const lines = await getStringArrayFromFile('user.txt')
+    users = lines
+
+    // pull lines
+    // split lines into first name and follows
+    // combine all follows to unique first names
+    // build User objects
+}
+
 app.get('/users', (req, res) => {
+    console.log("Requesting users...", users);
 
-    let data = ''
-
-    const readStream = fs.createReadStream(
-        path.join(__dirname, '../data') + '/user.txt',
-        'utf8');
-
-    readStream.on('data', function (chunk) {
-        if(chunk) data += chunk;
-    }).on('end', function () {
-        console.log(data);
-
-        // process user follows string
-        let follows = data.split("\n")
-
-        const users = {
-            follows: follows
-        }
-
-        return res.status(201).json(users)
-    });
+    return res.status(201).json({users, tweets})
 })
 
 
@@ -37,6 +42,14 @@ app.get('/', (req, res) => {
     res.send('Hello World!')
 })
 
-app.listen(port, () => {
-    console.log(`Example app listening at http://localhost:${port}`)
+app.listen(port, async () => {
+    await loadData()
+    console.log(`Twitter server listening at http://localhost:${port}`)
 })
+
+const loadData = async () => {
+    await getUsersFromFile()
+    console.log("Users loaded.")
+    await getTweetsFromFile()
+    console.log("Tweets loaded.")
+}
