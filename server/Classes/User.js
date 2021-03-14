@@ -2,7 +2,7 @@
 *   - name: String => User's name
 *   - follows: String[] => Array of strings of names of users that this User follows
 *   
-*   + setFollows(users) => sets follows var for this User
+*   + getFeed(tweets) => takes in a collection of tweets and filters to only what this User should see
 */
 
 class User {
@@ -11,8 +11,9 @@ class User {
         this.follows = follows
     }
 
-    setFollows(users){
-        this.follows = users
+    // Filters an array of Tweets to only what this user would see
+    getFeed(tweets){
+        return tweets.filter(tweet =>  tweet.user === this.name || this.follows.includes(tweet.user))
     }
 }
 

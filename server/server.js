@@ -39,7 +39,7 @@ const getUsersFromFile = async () => {
 app.get('/users', (req, res) => {
     console.log("Requesting users...", users);
 
-    return res.status(201).json({users, tweets})
+    return res.status(201).json({users, tweets, veronica_feed: users[2].getFeed(tweets)})
 })
 
 
