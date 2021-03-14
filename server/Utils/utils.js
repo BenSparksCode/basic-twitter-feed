@@ -37,7 +37,6 @@ const convertStringsToUsers = (userStringsFromFile) => {
             // Keeps track of all users mentioned
             allUsers = new Set([...allUsers, ...new Set(follows)]).add(splitLine[0])
         }
-
     });
 
     // Add users with no follows to userFollows
@@ -52,7 +51,12 @@ const convertStringsToUsers = (userStringsFromFile) => {
     let users = []
     // Build final array of User objects
     for (const [user, follows] of Object.entries(userFollows)) {
-        users.push(new User(user, [...follows]))
+        if(user && follows){
+            users.push(new User(user, [...follows]))
+        } else if(user){
+            // Handles case of user with no follows
+            users.push(new User(user, []))
+        }
     }
 
     return users
