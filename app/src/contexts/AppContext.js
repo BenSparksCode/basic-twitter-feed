@@ -13,37 +13,49 @@ export const AppContextProvider = (props) => {
     const [selectedUser, setSelectedUser] = useState('')
     const [userFeed, setUserFeed] = useState([])
 
-    useEffect( async () => {
+    useEffect(async () => {
+        // Get user list from server when app starts
         const res = await axios({
             method: 'get',
             url: `${API_URL}/users`,
         })
-        console.log(res.data);
 
-        // TODO - handle server down
-
-        setUsers(res.data)
+        if (!res.data || !res.data.users || res.data.users.length === 0) {
+            console.log("API Error - Couldn't get users on load...");
+            // TODO - handle API error
+            
+        } else {
+            // Received data as expected
+            setUsers(res.data.users)
+            setUsersLoaded(true)
+            setSelectedUser(res.data.users[0])
+        }
 
     }, [])
 
     const changeUser = async (username) => {
+        setSelectedUser(username)
         setUserFeedLoaded(false)
         console.log(username);
 
-        // call user_feed
-        setUserFeed([]) //TODO
+        // const res = await axios({
+        //     method: 'get',
+        //     url: `${API_URL}/users`,
+        //     body: {user: username}
+        // })
+        // setUserFeed([]) //TODO
 
-        setUserFeedLoaded(true)
+        // setUserFeedLoaded(true)
     }
 
 
     return (
         <AppContext.Provider value={{
             users, changeUser,
-            selectedUser, setSelectedUser,
+            selectedUser,
             userFeed
         }}>
-            { props.children }
+            { props.children}
         </AppContext.Provider>
     )
 }

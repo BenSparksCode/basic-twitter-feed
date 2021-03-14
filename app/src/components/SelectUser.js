@@ -1,10 +1,13 @@
-import React from 'react'
+import { useContext } from 'react'
 import { Menu, Dropdown, Button, message, Space, Tooltip } from 'antd';
 import { DownOutlined, UserOutlined } from '@ant-design/icons';
+
+import { AppContext } from '../contexts/AppContext'
 
 import { CardContainer } from './Card'
 
 export const SelectUser = () => {
+    const { users, changeUser, selectedUser } = useContext(AppContext)
 
     const handleMenuClick = (e) => {
         console.log(e);
@@ -29,7 +32,7 @@ export const SelectUser = () => {
         <CardContainer>
             <Dropdown overlay={menu}>
                 <Button className='DropdownButton'>
-                    Button <DownOutlined />
+                    {selectedUser} <DownOutlined />
                 </Button>
             </Dropdown>
         </CardContainer>
