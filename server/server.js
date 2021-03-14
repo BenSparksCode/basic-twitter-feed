@@ -4,7 +4,8 @@ const path = require('path');
 
 const {
     convertStringsToUsers,
-    convertStringsToTweets
+    convertStringsToTweets,
+    logServerData
 } = require('./Utils/utils')
 
 // const User = require('./Classes/User')
@@ -50,6 +51,8 @@ app.get('/', (req, res) => {
 app.listen(port, async () => {
     await loadData()
     console.log(`Twitter server listening at http://localhost:${port}`)
+    
+    logServerData(users, tweets)
 })
 
 const loadData = async () => {

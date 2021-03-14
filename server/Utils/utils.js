@@ -78,6 +78,13 @@ const convertStringsToTweets = (tweetStringsFromFile) => {
 }
 
 const logServerData = (users, tweets) => {
+    // Checks users and tweets are passed in correctly
+    if(!users || !tweets || users.length === 0){
+        console.log("No users/tweets to log...")
+        return null
+    }
+
+    // Logs each User and tweets from their follows
     users.forEach(user => {
         console.log(user.name)
         const feed = user.getFeed(tweets)
