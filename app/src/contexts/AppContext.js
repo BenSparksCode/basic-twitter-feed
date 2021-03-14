@@ -13,26 +13,27 @@ export const AppContextProvider = (props) => {
     const [selectedUser, setSelectedUser] = useState('')
     const [userFeed, setUserFeed] = useState([])
 
-    useEffect(async () => {
+    useEffect(() => {
         // Get user list from server when app starts
-        const res = await axios({
-            method: 'get',
-            url: `${API_URL}/users`,
-        })
+        const fetchData = async () => {
+            const res = await axios({
+                method: 'get',
+                url: `${API_URL}/users`,
+            })
 
-        if (!res.data || !res.data.users || res.data.users.length === 0) {
-            console.log("API Error - Couldn't get users on load...");
-            // TODO - handle API error
-            
-        } else {
-            // Received data as expected
-            setUsers(res.data.users)
-            setUsersLoaded(true)
-            setSelectedUser(res.data.users[0])
-            // Get first user's feed of tweets and display
-            changeUser(res.data.users[0])
+            if (!res.data || !res.data.users || res.data.users.length === 0) {
+                console.log("API Error - Couldn't get users on load...")
+            } else {
+                // Received data as expected
+                setUsers(res.data.users)
+                setUsersLoaded(true)
+                setSelectedUser(res.data.users[0])
+                // Get first user's feed of tweets and display
+                changeUser(res.data.users[0])
+            }
         }
 
+        fetchData()
     }, [])
 
     // Gets new feed of tweets for a given user
@@ -44,14 +45,12 @@ export const AppContextProvider = (props) => {
         const res = await axios({
             method: 'get',
             url: `${API_URL}/user_feed`,
-            params: {user: username}
+            params: { user: username }
         })
 
         if (!res || !res.data || !res.data.feed) {
             console.log("API Error - Couldn't get user's feed...");
-            // TODO - handle API down
-
-        } else if (res.data.feed.length === 0){
+        } else if (res.data.feed.length === 0) {
             setUserFeedLoaded(true)
         } else {
             setUserFeed(res.data.feed)
