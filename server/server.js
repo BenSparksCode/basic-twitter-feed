@@ -34,27 +34,36 @@ const getUsersFromFile = async () => {
     users = convertStringsToUsers(lines)
 }
 
+// Helper function to enable CORS for local dev
+const allowCrossDomain = (req, res) => {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Cache-Control");
+}
+
 app.get('/users', (req, res) => {
-    return res.status(201).json({users})
+    allowCrossDomain(req, res)
+    return res.status(201).json({ users })
 })
 
 app.get('/user_feed', (req, res) => {
-
+    allowCrossDomain(req, res)
+    
     // Check if a user is specified in the request
-    if(!req || !req.body || !req.body.user){
-        return res.status(403).json({error: "Request data missing."})
+    if (!req || !req.body || !req.body.user) {
+        return res.status(403).json({ error: "Request data missing." })
     }
 
     // Find the User object based on the name given
     const chosenUser = users.find(user => user.name === req.body.user)
     const feed = chosenUser.getFeed(tweets)
 
-    if(chosenUser && feed){
-        return res.status(200).json({feed})
-    } else if (chosenUser){
-        return res.status(401).json({error: "Couldn't retrieve user's feed."})
+    if (chosenUser && feed) {
+        return res.status(200).json({ feed })
+    } else if (chosenUser) {
+        return res.status(401).json({ error: "Couldn't retrieve user's feed." })
     } else {
-        return res.status(402).json({error: "Couldn't find user."})
+        return res.status(402).json({ error: "Couldn't find user." })
     }
 })
 
