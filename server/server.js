@@ -8,9 +8,6 @@ const {
     logServerData
 } = require('./Utils/utils')
 
-// const User = require('./Classes/User')
-// const Tweet = require('./Classes/Tweet')
-
 const app = express()
 const port = 5000
 
@@ -38,26 +35,38 @@ const getUsersFromFile = async () => {
 }
 
 app.get('/users', (req, res) => {
-    console.log("Requesting users...", users);
-
-    return res.status(201).json({users, tweets, veronica_feed: users[2].getFeed(tweets)})
+    return res.status(201).json({users})
 })
 
+app.get('/user_feed', (req, res) => {
 
-app.get('/', (req, res) => {
-    res.send('Hello World!')
+    // Check if a user is specified in the request
+    if(!req || !req.body || !req.body.user){
+        return res.status(403).json({error: "Request data missing."})
+    }
+
+    // Find the User object based on the name given
+    const chosenUser = users.find(user => user.name === req.body.user)
+    const feed = chosenUser.getFeed(tweets)
+
+    if(chosenUser && feed){
+        return res.status(200).json({feed})
+    } else if (chosenUser){
+        return res.status(401).json({error: "Couldn't retrieve user's feed."})
+    } else {
+        return res.status(402).json({error: "Couldn't find user."})
+    }
 })
 
 app.listen(port, async () => {
     await loadData()
-    console.log(`Twitter server listening at http://localhost:${port}`)
-    
+    console.log(`Twitter server listening at http://localhost:${port}\n`)
     logServerData(users, tweets)
 })
 
 const loadData = async () => {
     await getUsersFromFile()
-    console.log("Users loaded.")
+    // console.log("Users loaded.")
     await getTweetsFromFile()
-    console.log("Tweets loaded.")
+    // console.log("Tweets loaded.")
 }
