@@ -27,17 +27,10 @@ const getTweetsFromFile = async () => {
 }
 
 const getUsersFromFile = async () => {
-
+    // Get string lines from user.text
     const lines = await getStringArrayFromFile('user.txt')
-    users = lines
-
-    // convertStringsToUsers(lines)
-    convertStringsToUsers(lines)
-
-    // pull lines
-    // split lines into first name and follows
-    // combine all follows to unique first names
-    // build User objects
+    // Convert string lines to User objects
+    users = convertStringsToUsers(lines)
 }
 
 app.get('/users', (req, res) => {
