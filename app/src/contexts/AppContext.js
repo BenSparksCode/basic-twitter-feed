@@ -51,9 +51,9 @@ export const AppContextProvider = (props) => {
 
     return (
         <AppContext.Provider value={{
-            users, changeUser,
+            users, changeUser, usersLoaded,
             selectedUser,
-            userFeed
+            userFeed, userFeedLoaded,
         }}>
             { props.children}
         </AppContext.Provider>
