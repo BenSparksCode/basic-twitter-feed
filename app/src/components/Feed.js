@@ -13,7 +13,6 @@ export const Feed = () => {
 
     const { userFeed, userFeedLoaded } = useContext(AppContext)
 
-
     return (
         <CardContainer className='Feed'>
             {

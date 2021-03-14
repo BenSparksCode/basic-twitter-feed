@@ -1,7 +1,4 @@
-
-
 export const Tweet = (props) => {
-
     return (
         <div className='Tweet'>
             <p className='TweetUser'>@{props.user}</p>
