@@ -7,7 +7,7 @@ import { CardContainer } from './Card'
 export const SelectUser = () => {
 
     const handleMenuClick = (e) => {
-
+        console.log(e);
     }
 
     const menu = (
@@ -28,7 +28,7 @@ export const SelectUser = () => {
     return (
         <CardContainer>
             <Dropdown overlay={menu}>
-                <Button>
+                <Button className='DropdownButton'>
                     Button <DownOutlined />
                 </Button>
             </Dropdown>

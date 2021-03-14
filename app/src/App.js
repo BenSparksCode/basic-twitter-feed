@@ -6,12 +6,8 @@ import { SelectUser } from './components/SelectUser'
 import { Feed } from './components/Feed'
 
 const App = () => {
-  const { users, pullUsers } = useContext(AppContext)
-  // const [result, setResult] = useState("Nothing yet...")
+  const { users } = useContext(AppContext)
 
-  const testServer = () => {
-    pullUsers()
-  }
 
   return (
     <div className="App">

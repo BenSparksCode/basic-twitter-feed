@@ -25,3 +25,8 @@ code {
   justify-content: flex-start;
   flex-direction: column;
 }
+
+
+.DropdownButton{
+  width: 60%;
+}
