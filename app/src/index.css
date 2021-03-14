@@ -12,6 +12,16 @@ code {
     monospace;
 }
 
+.Title{
+  color: white;
+}
+
+
 .App {
+  max-height: 80vh;
+  min-height: 80vh;
   text-align: center;
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
 }
