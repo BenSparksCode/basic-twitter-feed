@@ -12,7 +12,6 @@ export const SelectUser = () => {
     const { users, changeUser, selectedUser, usersLoaded } = useContext(AppContext)
 
     const handleMenuClick = (e) => {
-        console.log(e);
         if (e && e.key && users.includes(e.key)) {
             changeUser(e.key)
         }
@@ -36,7 +35,7 @@ export const SelectUser = () => {
             {
                 !usersLoaded
                     ?
-                        <p><Spin className='StatsIndicator' indicator={loadingIcon} /> Loading Users</p>
+                        <div><Spin className='StatsIndicator' indicator={loadingIcon} /> Loading Users</div>
                     :
                     <Dropdown overlay={userMenu}>
                         <Button className='DropdownButton'>

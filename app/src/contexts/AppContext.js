@@ -8,7 +8,7 @@ const API_URL = "http://localhost:5000"
 export const AppContextProvider = (props) => {
 
     const [usersLoaded, setUsersLoaded] = useState(false)
-    const [userFeedLoaded, setUserFeedLoaded] = useState(true)
+    const [userFeedLoaded, setUserFeedLoaded] = useState(false)
     const [users, setUsers] = useState([])
     const [selectedUser, setSelectedUser] = useState('')
     const [userFeed, setUserFeed] = useState([])

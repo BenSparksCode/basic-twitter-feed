@@ -18,13 +18,14 @@ export const Feed = () => {
             {
                 !userFeedLoaded
                     ?
-                    <p><Spin className='StatsIndicator' indicator={loadingIcon} /> Loading Tweets</p>
+                    <div><Spin className='StatsIndicator' indicator={loadingIcon} /> Loading Tweets</div>
                     :
                     userFeed?.length > 0
                         ?
                         <div>
-                            {userFeed.map(tweet => <Tweet user={tweet.user} text={tweet.text} />)}
-                            <hr/>
+                            {userFeed.map((tweet, index) =>
+                                <Tweet key={index} user={tweet.user} text={tweet.text} />)}
+                            <hr />
                         </div>
                         :
                         <p>No tweets yet...</p>
