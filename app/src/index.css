@@ -16,7 +16,6 @@ code {
   color: white;
 }
 
-
 .App {
   max-height: 80vh;
   min-height: 80vh;
@@ -26,7 +25,41 @@ code {
   flex-direction: column;
 }
 
-
 .DropdownButton{
   width: 60%;
+}
+
+.Feed{
+  flex-grow: 1;
+  height: 100% !important;
+  min-height: 100% !important;
+  max-height: 100% !important;
+  overflow: scroll;
+  overflow-x: hidden;
+}
+
+.Feed::-webkit-scrollbar {
+  width: 3px;
+  border-radius: 2px;
+}
+
+.Feed::-webkit-scrollbar-thumb {
+  background-color: rgb(9, 109, 217, 0.5);
+  border-radius: 1.5px;
+}
+
+.Tweet{
+  text-align: left;
+  max-height: 160px;
+  border-top: 1px solid gray;
+}
+
+.TweetUser{
+  font-weight: 700;
+  padding: 0 14px 0 8px;
+  margin: 8px 0 8px 0;
+}
+
+.TweetText{
+  margin: 0 14px 14px 22px;
 }

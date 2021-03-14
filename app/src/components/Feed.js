@@ -15,7 +15,7 @@ export const Feed = () => {
 
 
     return (
-        <CardContainer>
+        <CardContainer className='Feed'>
             {
                 !userFeedLoaded
                     ?
@@ -23,7 +23,10 @@ export const Feed = () => {
                     :
                     userFeed?.length > 0
                         ?
-                        userFeed.map(tweet => <Tweet tweetData={tweet} />)
+                        <div>
+                            {userFeed.map(tweet => <Tweet user={tweet.user} text={tweet.text} />)}
+                            <hr/>
+                        </div>
                         :
                         <p>No tweets yet...</p>
             }
