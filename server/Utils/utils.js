@@ -1,6 +1,8 @@
 const User = require('../Classes/User')
 const Tweet = require('../Classes/Tweet')
 
+const MAX_TWEET_LENGTH = 280
+
 const convertStringsToUsers = (userStringsFromFile) => {
     // userStringsFromFile: String[]
     // If blank or no string given => empty array = no Users
@@ -15,7 +17,7 @@ const convertStringsToUsers = (userStringsFromFile) => {
         const splitLine = line.split(" follows ")
 
         //Check line and substrings adhere to expected structure
-        if(!line || splitLine.length != 2 || !splitLine[0] || !splitLine[1]) return
+        if (!line || splitLine.length != 2 || !splitLine[0] || !splitLine[1]) return
 
         //Split follows into separate names
         const follows = splitLine[1].split(",")
@@ -40,7 +42,7 @@ const convertStringsToUsers = (userStringsFromFile) => {
 
     // Add users with no follows to userFollows
     allUsers.forEach(user => {
-        if(user in userFollows) {
+        if (user in userFollows) {
             return
         } else {
             userFollows[user] = null
@@ -68,10 +70,15 @@ const convertStringsToTweets = (tweetStringsFromFile) => {
         splitLine = line.split("> ")
 
         // Check line and substrings adhere to expected structure
-        if(!line || splitLine.length != 2 || !splitLine[0] || !splitLine[1]) return
+        if (!line || splitLine.length != 2 || !splitLine[0] || !splitLine[1]) return
+
+        // Enforce 280 char limit for Tweet text
+        const tweetText = (splitLine[1].length > MAX_TWEET_LENGTH)
+            ? splitLine[1].substring(0, MAX_TWEET_LENGTH)
+            : splitLine[1]
 
         // Create Tweet object and add to array
-        tweets.push(new Tweet(splitLine[0], splitLine[1]))
+        tweets.push(new Tweet(splitLine[0], tweetText))
     })
 
     return tweets
@@ -79,7 +86,7 @@ const convertStringsToTweets = (tweetStringsFromFile) => {
 
 const logServerData = (users, tweets) => {
     // Checks users and tweets are passed in correctly
-    if(!users || !tweets || users.length === 0){
+    if (!users || !tweets || users.length === 0) {
         console.log("No users/tweets to log...")
         return null
     }
