@@ -43,7 +43,7 @@ const allowCrossDomain = (req, res) => {
 
 app.get('/users', (req, res) => {
     allowCrossDomain(req, res)
-    return res.status(201).json({ users })
+    return res.status(201).json({ users: users.map(u => u.name) })
 })
 
 app.get('/user_feed', (req, res) => {
