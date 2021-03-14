@@ -1,17 +1,20 @@
-import {useState} from 'react'
+import { useState, useContext } from 'react'
+
+import { AppContext } from './contexts/AppContext'
 
 const App = () => {
-  const [result, setResult] = useState("Nothing yet...")
+  const { users, pullUsers } = useContext(AppContext)
+  // const [result, setResult] = useState("Nothing yet...")
 
   const testServer = () => {
-    console.log("Testing...");
+    pullUsers()
   }
 
   return (
     <div className="App">
-        <button onClick={testServer}>Test Server</button>
-        <h2>Server response</h2>
-        <p>{result}</p>
+      <button onClick={testServer}>Test Server</button>
+      <h2>Server response</h2>
+      <p>{users}</p>
     </div>
   );
 }
