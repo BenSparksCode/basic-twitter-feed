@@ -50,20 +50,20 @@ app.get('/user_feed', (req, res) => {
     allowCrossDomain(req, res)
     
     // Check if a user is specified in the request
-    if (!req || !req.body || !req.body.user) {
-        return res.status(403).json({ error: "Request data missing." })
+    if (!req || !req.query || !req.query.user) {
+        return res.status(400).json({ error: "Request params missing." })
     }
 
     // Find the User object based on the name given
-    const chosenUser = users.find(user => user.name === req.body.user)
+    const chosenUser = users.find(user => user.name === req.query.user)
     const feed = chosenUser.getFeed(tweets)
 
     if (chosenUser && feed) {
         return res.status(200).json({ feed })
     } else if (chosenUser) {
-        return res.status(401).json({ error: "Couldn't retrieve user's feed." })
+        return res.status(400).json({ error: "Couldn't retrieve user's feed." })
     } else {
-        return res.status(402).json({ error: "Couldn't find user." })
+        return res.status(400).json({ error: "Couldn't find user." })
     }
 })
 
@@ -75,7 +75,5 @@ app.listen(port, async () => {
 
 const loadData = async () => {
     await getUsersFromFile()
-    // console.log("Users loaded.")
     await getTweetsFromFile()
-    // console.log("Tweets loaded.")
 }

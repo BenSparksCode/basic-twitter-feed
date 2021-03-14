@@ -5,24 +5,13 @@ export const AppContext = createContext()
 
 const API_URL = "http://localhost:5000"
 
-// DELEET
-const testTweet = {
-    user: "Vitalik",
-    text: "Things like tornado cash and uniswap, kyber and the like are successful in part because they are just tools that people can put into their existing workflows, and not ecosystems. We need more tools that are content with being tools and fewer attempts at ecosystems."
-}
-
-const testTweet2 = {
-    user: "Veronica",
-    text: "Worried about shifting your focus from now another sister will surely become to have bugs, only!"
-}
-
 export const AppContextProvider = (props) => {
 
     const [usersLoaded, setUsersLoaded] = useState(false)
     const [userFeedLoaded, setUserFeedLoaded] = useState(true)
     const [users, setUsers] = useState([])
     const [selectedUser, setSelectedUser] = useState('')
-    const [userFeed, setUserFeed] = useState([testTweet, testTweet2])
+    const [userFeed, setUserFeed] = useState([])
 
     useEffect(async () => {
         // Get user list from server when app starts
@@ -40,25 +29,35 @@ export const AppContextProvider = (props) => {
             setUsers(res.data.users)
             setUsersLoaded(true)
             setSelectedUser(res.data.users[0])
+            // Get first user's feed of tweets and display
+            changeUser(res.data.users[0])
         }
 
     }, [])
 
+    // Gets new feed of tweets for a given user
     const changeUser = async (username) => {
         setSelectedUser(username)
+        setUserFeed([])
         setUserFeedLoaded(false)
-        console.log(username);
 
-        // const res = await axios({
-        //     method: 'get',
-        //     url: `${API_URL}/users`,
-        //     body: {user: username}
-        // })
-        // setUserFeed([]) //TODO
+        const res = await axios({
+            method: 'get',
+            url: `${API_URL}/user_feed`,
+            params: {user: username}
+        })
 
-        // setUserFeedLoaded(true)
+        if (!res || !res.data || !res.data.feed) {
+            console.log("API Error - Couldn't get user's feed...");
+            // TODO - handle API down
+
+        } else if (res.data.feed.length === 0){
+            setUserFeedLoaded(true)
+        } else {
+            setUserFeed(res.data.feed)
+            setUserFeedLoaded(true)
+        }
     }
-
 
     return (
         <AppContext.Provider value={{
