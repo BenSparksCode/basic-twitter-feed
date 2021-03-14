@@ -77,8 +77,19 @@ const convertStringsToTweets = (tweetStringsFromFile) => {
     return tweets
 }
 
+const logServerData = (users, tweets) => {
+    users.forEach(user => {
+        console.log(user.name)
+        const feed = user.getFeed(tweets)
+        feed.forEach(tweet => {
+            console.log(`\t@${tweet.user}: ${tweet.text}`);
+        });
+    });
+}
+
 
 module.exports = {
     convertStringsToUsers: convertStringsToUsers,
-    convertStringsToTweets: convertStringsToTweets
+    convertStringsToTweets: convertStringsToTweets,
+    logServerData: logServerData
 }
