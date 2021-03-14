@@ -1,11 +1,14 @@
 const express = require('express')
 const fs = require('fs').promises;
-var path = require('path');
+const path = require('path');
+
+const {
+    convertStringsToUsers
+} = require('./Utils/utils')
 
 const app = express()
 const port = 5000
 
-let dataLoaded = false
 let users = []
 let tweets = []
 
@@ -24,6 +27,8 @@ const getUsersFromFile = async () => {
 
     const lines = await getStringArrayFromFile('user.txt')
     users = lines
+
+    convertStringsToUsers(lines)
 
     // pull lines
     // split lines into first name and follows
