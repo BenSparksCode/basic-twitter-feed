@@ -6,6 +6,9 @@ const {
     convertStringsToUsers
 } = require('./Utils/utils')
 
+const User = require('./Classes/User')
+const Tweet = require('./Classes/Tweet')
+
 const app = express()
 const port = 5000
 
@@ -28,6 +31,7 @@ const getUsersFromFile = async () => {
     const lines = await getStringArrayFromFile('user.txt')
     users = lines
 
+    // convertStringsToUsers(lines)
     convertStringsToUsers(lines)
 
     // pull lines
