@@ -14,7 +14,7 @@ const convertStringsToUsers = (userStringsFromFile) => {
         //Split into User and Users they follow
         const splitLine = line.split(" follows ")
 
-        //Checks for line structure
+        //Check line and substrings adhere to expected structure
         if(!line || splitLine.length != 2 || !splitLine[0] || !splitLine[1]) return
 
         //Split follows into separate names
@@ -57,13 +57,28 @@ const convertStringsToUsers = (userStringsFromFile) => {
 }
 
 const convertStringsToTweets = (tweetStringsFromFile) => {
+    // tweetStringsFromFile: String[]
+    // If blank or no string given => empty array = no Tweets
+    if (!tweetStringsFromFile || tweetStringsFromFile.length === 0) return []
 
+    let tweets = []
 
+    tweetStringsFromFile.forEach(line => {
+        // Split tweet into [user | text]
+        splitLine = line.split("> ")
+
+        // Check line and substrings adhere to expected structure
+        if(!line || splitLine.length != 2 || !splitLine[0] || !splitLine[1]) return
+
+        // Create Tweet object and add to array
+        tweets.push(new Tweet(splitLine[0], splitLine[1]))
+    })
+
+    return tweets
 }
-
-
 
 
 module.exports = {
     convertStringsToUsers: convertStringsToUsers,
+    convertStringsToTweets: convertStringsToTweets
 }

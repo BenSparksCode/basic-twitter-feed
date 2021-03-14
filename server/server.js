@@ -3,11 +3,12 @@ const fs = require('fs').promises;
 const path = require('path');
 
 const {
-    convertStringsToUsers
+    convertStringsToUsers,
+    convertStringsToTweets
 } = require('./Utils/utils')
 
-const User = require('./Classes/User')
-const Tweet = require('./Classes/Tweet')
+// const User = require('./Classes/User')
+// const Tweet = require('./Classes/Tweet')
 
 const app = express()
 const port = 5000
@@ -22,8 +23,10 @@ const getStringArrayFromFile = async (fileName) => {
 }
 
 const getTweetsFromFile = async () => {
+    // Get string lines from tweet.text
     const lines = await getStringArrayFromFile('tweet.txt')
-    tweets = lines
+    // Convert string lines to Tweet objects
+    tweets = convertStringsToTweets(lines)
 }
 
 const getUsersFromFile = async () => {
