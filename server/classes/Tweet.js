@@ -6,8 +6,9 @@
 
 class Tweet {
     constructor(user, text){
-        this.user = user
-        this.text = text
+        // Enforce user and text are Strings. User string is non-blank.
+        this.user = user && (typeof user === 'string' || user instanceof String) ? user : "Anon"
+        this.text = (typeof text === 'string' || text instanceof String) ? text : ""
     }
 }
 

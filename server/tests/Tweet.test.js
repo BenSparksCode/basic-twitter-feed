@@ -8,12 +8,12 @@ test('Basic Tweet object', () => {
 
 test('Blank Tweet object', () => {
     const testData = new Tweet()
-    expect(testData.user).toBe(undefined)
-    expect(testData.text).toBe(undefined)
+    expect(testData.user).toBe('Anon')
+    expect(testData.text).toBe('')
 })
 
 test('Empty string Tweet object', () => {
     const testData = new Tweet('','')
-    expect(testData.user).toBe('')
+    expect(testData.user).toBe('Anon')
     expect(testData.text).toBe('')
 })

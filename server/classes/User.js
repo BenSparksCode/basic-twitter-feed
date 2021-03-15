@@ -6,14 +6,15 @@
 */
 
 class User {
-    constructor(name, follows){
-        this.name = name
-        this.follows = follows
+    constructor(name, follows) {
+        // Enforce non-blank String name and Array follows
+        this.name = name && (typeof name === 'string' || name instanceof String) ? name : "Anon"
+        this.follows = (Array.isArray(follows)) ? follows : []
     }
 
     // Filters an array of Tweets to only what this user would see
-    getFeed(tweets){
-        return tweets.filter(tweet =>  tweet.user === this.name || this.follows.includes(tweet.user))
+    getFeed(tweets) {
+        return tweets.filter(tweet => tweet.user === this.name || this.follows.includes(tweet.user))
     }
 }
 
