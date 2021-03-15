@@ -80,3 +80,10 @@ const loadData = async () => {
     await getUsersFromFile()
     await getTweetsFromFile()
 }
+
+// For unit testing
+module.exports = {
+    getStringArrayFromFile: getStringArrayFromFile,
+    getTweetsFromFile: getTweetsFromFile,
+    getUsersFromFile: getUsersFromFile
+}
