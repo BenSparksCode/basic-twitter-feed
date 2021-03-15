@@ -4,12 +4,12 @@ const Tweet = require('../classes/Tweet')
 const {
     convertStringsToUsers,
     convertStringsToTweets,
-    logServerData
 } = require('../utils/utils')
 
-
+// ----------------------------
 // convertStringsToUsers Tests:
 // ----------------------------
+
 test('Basic single follow line', () => {
     const testData = [
         'Bob follows Jay'
@@ -74,11 +74,10 @@ test('Complex follows with errors', () => {
     expect(convertStringsToUsers(testData)).toEqual(expectedResult);
 })
 
-
-
-
+// ----------------------------
 // convertStringsToTweets Tests:
 // ----------------------------
+
 test('Basic single tweet', () => {
     const testData = [
         'Bob> Hello World.'
@@ -89,4 +88,50 @@ test('Basic single tweet', () => {
     expect(convertStringsToTweets(testData)).toEqual(expectedResult);
 })
 
+test('Blank tweets only', () => {
+    const testData = [
+        '',''
+    ]
+    const expectedResult = []
+    console.log(convertStringsToTweets(testData));
+    expect(convertStringsToTweets(testData)).toEqual(expectedResult);
+})
 
+test('Blank lines within full lines', () => {
+    // Expected to skip empty lines
+    const testData = [
+        'Bob> Hello World.', '','',
+        'Jay> U up?'
+    ]
+    const expectedResult = [
+        new Tweet('Bob', 'Hello World.'),
+        new Tweet('Jay', 'U up?')
+    ]
+    expect(convertStringsToTweets(testData)).toEqual(expectedResult);
+})
+
+test('Complex chars in Tweets', () => {
+    const testData = [
+        'Bob> Hello World.#@#%^%(!&@#)&(":{}<>?',
+        'Jay> \n',
+        'Joe> 汉字/漢字'
+    ]
+    const expectedResult = [
+        new Tweet('Bob', 'Hello World.#@#%^%(!&@#)&(":{}<>?'),
+        new Tweet('Jay', '\n'),
+        new Tweet('Joe', '汉字/漢字')
+    ]
+    expect(convertStringsToTweets(testData)).toEqual(expectedResult);
+})
+
+test('Complex Tweets with errors', () => {
+    const testData = [
+        '> How do I change my name?', //User = '' = skipped
+        'Jay>', //Should not create Tweet - malformed in text file
+        'Joe> one > two' //Text = 'one > two'
+    ]
+    const expectedResult = [
+        new Tweet('Joe', 'one > two')
+    ]
+    expect(convertStringsToTweets(testData)).toEqual(expectedResult);
+})

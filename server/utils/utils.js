@@ -74,7 +74,9 @@ const convertStringsToTweets = (tweetStringsFromFile) => {
         splitLine = line.split("> ")
 
         // Check line and substrings adhere to expected structure
-        if (!line || splitLine.length != 2 || !splitLine[0] || !splitLine[1]) return
+        if (!line || splitLine.length < 2 || !splitLine[0] || !splitLine[1]) return
+        // Including tweets with "> " in text
+        if(splitLine.length > 2) splitLine[1] = line.substring(line.indexOf("> ")+2)
 
         // Enforce 280 char limit for Tweet text
         const tweetText = (splitLine[1].length > MAX_TWEET_LENGTH)
