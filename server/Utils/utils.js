@@ -1,5 +1,5 @@
-const User = require('../Classes/User')
-const Tweet = require('../Classes/Tweet')
+const User = require('../classes/User')
+const Tweet = require('../classes/Tweet')
 
 const MAX_TWEET_LENGTH = 280
 

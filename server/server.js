@@ -6,7 +6,7 @@ const {
     convertStringsToUsers,
     convertStringsToTweets,
     logServerData
-} = require('./Utils/utils')
+} = require('./utils/utils')
 
 const app = express()
 const port = 5000
