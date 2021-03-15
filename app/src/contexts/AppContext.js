@@ -24,7 +24,7 @@ export const AppContextProvider = (props) => {
             if (!res.data || !res.data.users || res.data.users.length === 0) {
                 console.log("API Error - Couldn't get users on load...")
             } else {
-                // Received data as expected
+                // Received data as expected - set up state
                 setUsers(res.data.users)
                 setUsersLoaded(true)
                 setSelectedUser(res.data.users[0])

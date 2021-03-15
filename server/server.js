@@ -43,7 +43,8 @@ const allowCrossDomain = (req, res) => {
 
 app.get('/users', (req, res) => {
     allowCrossDomain(req, res)
-    return res.status(201).json({ users: users.map(u => u.name) })
+    // Sends only user names, not follows, for min data egress
+    return res.status(200).json({ users: users.map(u => u.name) })
 })
 
 app.get('/user_feed', (req, res) => {
@@ -51,7 +52,7 @@ app.get('/user_feed', (req, res) => {
     
     // Check if a user is specified in the request
     if (!req || !req.query || !req.query.user) {
-        return res.status(400).json({ error: "Request params missing." })
+        return res.status(400)
     }
 
     // Find the User object based on the name given
@@ -60,19 +61,21 @@ app.get('/user_feed', (req, res) => {
 
     if (chosenUser && feed) {
         return res.status(200).json({ feed })
-    } else if (chosenUser) {
-        return res.status(400).json({ error: "Couldn't retrieve user's feed." })
     } else {
-        return res.status(400).json({ error: "Couldn't find user." })
+        return res.status(400)
     }
 })
 
+// Starting server
 app.listen(port, async () => {
+    // Wait for data from text files
     await loadData()
     console.log(`Twitter server listening at http://localhost:${port}\n`)
+    // Log User and Tweet data in specified format
     logServerData(users, tweets)
 })
 
+// Async loading in data from text files on server start
 const loadData = async () => {
     await getUsersFromFile()
     await getTweetsFromFile()
