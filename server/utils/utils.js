@@ -1,7 +1,16 @@
+const fs = require('fs').promises;
+const path = require('path');
+
 const User = require('../classes/User')
 const Tweet = require('../classes/Tweet')
 
 const MAX_TWEET_LENGTH = 280
+
+const getStringArrayFromFile = async (fileName) => {
+    // Will look for file in '../../data' dir
+    const res = await fs.readFile(path.join(__dirname, '../../data') + `/${fileName}`, 'utf8')
+    return res.split('\r\n')
+}
 
 const convertStringsToUsers = (userStringsFromFile) => {
     // userStringsFromFile: String[]
@@ -109,6 +118,7 @@ const logServerData = (users, tweets) => {
 
 
 module.exports = {
+    getStringArrayFromFile: getStringArrayFromFile,
     convertStringsToUsers: convertStringsToUsers,
     convertStringsToTweets: convertStringsToTweets,
     logServerData: logServerData

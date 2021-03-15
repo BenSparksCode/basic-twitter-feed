@@ -1,8 +1,7 @@
 const express = require('express')
-const fs = require('fs').promises;
-const path = require('path');
 
 const {
+    getStringArrayFromFile,
     convertStringsToUsers,
     convertStringsToTweets,
     logServerData
@@ -13,12 +12,6 @@ const port = 5000
 
 let users = []
 let tweets = []
-
-const getStringArrayFromFile = async (fileName) => {
-    // Will look for file in '../data' dir
-    const res = await fs.readFile(path.join(__dirname, '../data') + `/${fileName}`, 'utf8')
-    return res.split('\r\n')
-}
 
 const getTweetsFromFile = async () => {
     // Get string lines from tweet.text

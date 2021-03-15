@@ -93,7 +93,6 @@ test('Blank tweets only', () => {
         '',''
     ]
     const expectedResult = []
-    console.log(convertStringsToTweets(testData));
     expect(convertStringsToTweets(testData)).toEqual(expectedResult);
 })
 
